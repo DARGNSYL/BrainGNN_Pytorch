@@ -4,7 +4,7 @@
     <inspection_tool class="PyPackageRequirementsInspection" enabled="true" level="WARNING" enabled_by_default="true">
       <option name="ignoredPackages">
         <value>
-          <list size="200">
+          <list size="223">
             <item index="0" class="java.lang.String" itemvalue="gensim" />
             <item index="1" class="java.lang.String" itemvalue="torch-scatter" />
             <item index="2" class="java.lang.String" itemvalue="unity-scope-colourlovers" />
@@ -205,6 +205,29 @@
             <item index="197" class="java.lang.String" itemvalue="deepdish" />
             <item index="198" class="java.lang.String" itemvalue="unity-scope-calculator" />
             <item index="199" class="java.lang.String" itemvalue="ply" />
+            <item index="200" class="java.lang.String" itemvalue="Bottleneck" />
+            <item index="201" class="java.lang.String" itemvalue="clyent" />
+            <item index="202" class="java.lang.String" itemvalue="pyodbc" />
+            <item index="203" class="java.lang.String" itemvalue="h5py" />
+            <item index="204" class="java.lang.String" itemvalue="black" />
+            <item index="205" class="java.lang.String" itemvalue="pycosat" />
+            <item index="206" class="java.lang.String" itemvalue="et-xmlfile" />
+            <item index="207" class="java.lang.String" itemvalue="llvmlite" />
+            <item index="208" class="java.lang.String" itemvalue="mkl-fft" />
+            <item index="209" class="java.lang.String" itemvalue="pathtools" />
+            <item index="210" class="java.lang.String" itemvalue="fastcache" />
+            <item index="211" class="java.lang.String" itemvalue="anaconda-client" />
+            <item index="212" class="java.lang.String" itemvalue="cytoolz" />
+            <item index="213" class="java.lang.String" itemvalue="sip" />
+            <item index="214" class="java.lang.String" itemvalue="gmpy2" />
+            <item index="215" class="java.lang.String" itemvalue="torchaudio" />
+            <item index="216" class="java.lang.String" itemvalue="mkl-service" />
+            <item index="217" class="java.lang.String" itemvalue="nibabel" />
+            <item index="218" class="java.lang.String" itemvalue="isodate" />
+            <item index="219" class="java.lang.String" itemvalue="certifi" />
+            <item index="220" class="java.lang.String" itemvalue="mypy-extensions" />
+            <item index="221" class="java.lang.String" itemvalue="rdflib" />
+            <item index="222" class="java.lang.String" itemvalue="googledrivedownloader" />
           </list>
         </value>
       </option>

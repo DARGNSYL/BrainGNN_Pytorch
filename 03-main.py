@@ -8,9 +8,55 @@ import torch
 import torch.nn.functional as F
 from torch.optim import lr_scheduler
 from tensorboardX import SummaryWriter
+import os
+import sys
+import numpy as np
+import argparse
+import time
+import copy
+
+
+# ================= 核心路径修复 =================
+# 获取当前脚本 03-main.py 所在的文件夹绝对路径 (BrainGNN_Pytorch)
+project_root = os.path.dirname(os.path.abspath(__file__))
+
+# 将项目根目录插入搜索路径的第一位
+if project_root not in sys.path:
+    sys.path.insert(0, project_root)
+
+# 打印路径进行调试，运行后请检查控制台输出
+print(f"--- 调试信息 ---")
+print(f"项目根目录: {project_root}")
+print(f"尝试导入 imports 文件夹位置: {os.path.join(project_root, 'imports')}")
+# ===============================================
+
+import torch
+import torch.nn.functional as F
+from torch.optim import lr_scheduler
+from tensorboardX import SummaryWriter
+
+# 修正：处理图数据必须使用 torch_geometric 的 DataLoader
+from torch_geometric.loader import DataLoader
+
+# 模块导入
+try:
+    from imports.ABIDEDataset import ABIDEDataset
+    from imports.utils import train_val_test_split
+    from net.braingnn import Network
+    print("成功：所有模块已正确加载！")
+except ImportError as e:
+    print(f"错误：导入模块失败。具体原因: {e}")
+    print(f"当前目录下的内容: {os.listdir(project_root)}")
+    sys.exit(1) # 停止运行，防止后续报错
+
+from sklearn.metrics import classification_report, confusion_matrix
+
+# 后续代码保持不变...
+
 
 from imports.ABIDEDataset import ABIDEDataset
-from torch_geometric.data import DataLoader
+# from torch.data import DataLoader下面一行是修改的=======
+from torch.utils.data import DataLoader
 from net.braingnn import Network
 from imports.utils import train_val_test_split
 from sklearn.metrics import classification_report, confusion_matrix
