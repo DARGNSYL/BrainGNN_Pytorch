@@ -77,10 +77,25 @@ class Network(torch.nn.Module):
         # w1 = torch.tensor([1.0], requires_grad=True).to(x.device)
         # w2 = torch.tensor([1.0], requires_grad=True).to(x.device)
         # return x, w1, w2, torch.sigmoid(score1).view(x.size(0), -1), torch.sigmoid(score2).view(x.size(0), -1)
+        # 临时打印，运行一次看到输出后就可以删掉
+        def get_pooling_weight(pool_layer):
+            # 方案 A: 从 _parameters 字典中精准抓取
+            if 'p' in pool_layer._parameters and pool_layer._parameters['p'] is not None:
+                return pool_layer._parameters['p']
+            if 'weight' in pool_layer._parameters and pool_layer._parameters['weight'] is not None:
+                return pool_layer._parameters['weight']
 
-        # 针对新版 PyG 的精准属性定位，找回原始的池化向量最后一行是原本的
-        w1 = self.pool1.score_helper.weight
-        w2 = self.pool2.score_helper.weight
+            # 方案 B: 如果是在子模块里（针对某些新版封装）
+            for name, param in pool_layer.named_parameters():
+                if 'weight' in name or 'p' in name:
+                    return param
+
+            # 方案 C: 实在找不到的终极保底，但会打印提示（不应该运行到这里）
+            print("警告：未找到池化层权重，正在使用初始化向量")
+            return torch.ones(pool_layer.in_channels, device=x.device, requires_grad=True)
+
+        w1 = get_pooling_weight(self.pool1)
+        w2 = get_pooling_weight(self.pool2)
 
         return x, w1, w2, torch.sigmoid(score1).view(x.size(0), -1), torch.sigmoid(score2).view(x.size(0), -1)
 
