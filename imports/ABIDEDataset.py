@@ -5,7 +5,7 @@ from os import listdir
 import numpy as np
 import os.path as osp
 from imports.read_abide_stats_parall import read_data
-
+import os
 
 class ABIDEDataset(InMemoryDataset):
     def __init__(self, root, name, transform=None, pre_transform=None):
@@ -14,12 +14,26 @@ class ABIDEDataset(InMemoryDataset):
         super(ABIDEDataset, self).__init__(root,transform, pre_transform)
         self.data, self.slices = torch.load(self.processed_paths[0])
 
+    # @property
+    # def raw_file_names(self):
+    #     data_dir = osp.join(self.root,'raw')
+    #     onlyfiles = [f for f in listdir(data_dir) if osp.isfile(osp.join(data_dir, f))]
+    #     onlyfiles.sort()
+    #     return onlyfiles
+
     @property
     def raw_file_names(self):
-        data_dir = osp.join(self.root,'raw')
+        # 修改前：data_dir = '/home/azureuser/...'
+        # 修改后：使用实例初始化时传入的 root 路径
+        data_dir = osp.join(self.root, 'raw')
+
+        # 确保文件夹存在，不存在就创建一个，防止报错
+        if not osp.exists(data_dir):
+            os.makedirs(data_dir)
+
         onlyfiles = [f for f in listdir(data_dir) if osp.isfile(osp.join(data_dir, f))]
-        onlyfiles.sort()
         return onlyfiles
+
     @property
     def processed_file_names(self):
         return  'data.pt'

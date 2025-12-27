@@ -26,9 +26,22 @@ import shutil
 import sys
 
 # Input data variables
+# code_folder = os.getcwd()
+# root_folder = '/data/'
+# data_folder = os.path.join(root_folder, 'ABIDE_pcp/cpac/filt_noglobal/')
+# 一下修改
 code_folder = os.getcwd()
-root_folder = '/data/'
-data_folder = os.path.join(root_folder, 'ABIDE_pcp/cpac/filt_noglobal/')
+# 将数据存放位置设为项目根目录下的 data 文件夹
+root_folder = os.path.join(code_folder, 'data')
+
+# 自动拼接子目录路径
+data_folder = os.path.join(root_folder, 'ABIDE_pcp', 'cpac', 'filt_noglobal')
+
+# 确保文件夹存在
+if not os.path.exists(data_folder):
+    os.makedirs(data_folder)
+
+    # 以上修改
 if not os.path.exists(data_folder):
     os.makedirs(data_folder)
 shutil.copyfile(os.path.join(root_folder,'subject_ID.txt'), os.path.join(data_folder, 'subject_IDs.txt'))
