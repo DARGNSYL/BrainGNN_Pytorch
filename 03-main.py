@@ -70,7 +70,7 @@ device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--epoch', type=int, default=0, help='starting epoch')
-parser.add_argument('--n_epochs', type=int, default=100, help='number of epochs of training')
+parser.add_argument('--n_epochs', type=int, default=1, help='number of epochs of training')
 parser.add_argument('--batchSize', type=int, default=100, help='size of the batches')
 parser.add_argument('--dataroot', type=str, default='C:\\Users\\28904\Desktop\\graduation project\\BrainGNN_Pytorch\\data\\ABIDE_pcp\\cpac\\filt_noglobal', help='root directory of the dataset')
 parser.add_argument('--fold', type=int, default=0, help='training which fold')

@@ -72,7 +72,19 @@ class Network(torch.nn.Module):
         x= F.dropout(x, p=0.5, training=self.training)
         x = F.log_softmax(self.fc3(x), dim=-1)
 
-        return x,self.pool1.weight,self.pool2.weight, torch.sigmoid(score1).view(x.size(0),-1), torch.sigmoid(score2).view(x.size(0),-1)
+        # 使用空的 tensor 代替 weight，因为新版本 PyG 内部结构变了
+        # 这样可以跳过报错，且不影响分类训练最后一行注释是原来的版本
+        # w1 = torch.tensor([1.0], requires_grad=True).to(x.device)
+        # w2 = torch.tensor([1.0], requires_grad=True).to(x.device)
+        # return x, w1, w2, torch.sigmoid(score1).view(x.size(0), -1), torch.sigmoid(score2).view(x.size(0), -1)
+
+        # 针对新版 PyG 的精准属性定位，找回原始的池化向量最后一行是原本的
+        w1 = self.pool1.score_helper.weight
+        w2 = self.pool2.score_helper.weight
+
+        return x, w1, w2, torch.sigmoid(score1).view(x.size(0), -1), torch.sigmoid(score2).view(x.size(0), -1)
+
+        # return x,self.pool1.weight,self.pool2.weight, torch.sigmoid(score1).view(x.size(0),-1), torch.sigmoid(score2).view(x.size(0),-1)
 
     def augment_adj(self, edge_index, edge_weight, num_nodes):
         edge_index, edge_weight = add_self_loops(edge_index, edge_weight,
